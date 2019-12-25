@@ -30,9 +30,15 @@ def evaluate(model, problem, mode='val'):
     assert mode in ['test', 'val']
     preds, acts = [], []
     for (ids, targets, _) in problem.iterate(mode=mode, shuffle=False):
-        preds.append(to_numpy(model(ids, problem.feats, train=False)))
-        acts.append(to_numpy(targets))
-    
+        # preds.append(to_numpy(model(ids, problem.feats, train=False)))
+        # acts.append(to_numpy(targets))
+        temp_model = model(ids, problem.feats, train=False).cpu().detach().numpy()
+        temp_targets = targets.cpu().detach().numpy()
+        # print("temp model ", type(temp_model))
+        # print("temp target ", type(temp_targets))
+
+        preds.append(temp_model)
+        acts.append(temp_targets)
     return problem.metric_fn(np.vstack(acts), np.vstack(preds))
 
 # --
@@ -41,11 +47,11 @@ def evaluate(model, problem, mode='val'):
 def parse_args():
     parser = argparse.ArgumentParser()
     
-    parser.add_argument('--problem-path', type=str, required=True)
+    parser.add_argument('--problem-path', type=str, default='./data/reddit/problem.h5')
     parser.add_argument('--no-cuda', action="store_true")
     
     # Optimization params
-    parser.add_argument('--batch-size', type=int, default=512)
+    parser.add_argument('--batch-size', type=int, default=128)
     parser.add_argument('--epochs', type=int, default=10)
     parser.add_argument('--lr-init', type=float, default=0.01)
     parser.add_argument('--lr-schedule', type=str, default='constant')
@@ -77,8 +83,11 @@ def parse_args():
 
 
 if __name__ == "__main__":
+# def test(params):
     args = parse_args()
     set_seeds(args.seed)
+
+    # args.n_train_samples = str(int(params['samples_1'])) + ',' + str(int(params['samples_2'])) + ',' + str(int(params['samples_3']))
     
     # --
     # Load problem
@@ -90,6 +99,7 @@ if __name__ == "__main__":
     
     n_train_samples = map(int, args.n_train_samples.split(','))
     n_val_samples = map(int, args.n_val_samples.split(','))
+
     output_dims = map(int, args.output_dims.split(','))
     model = GSSupervised(**{
         "sampler_class" : sampler_lookup[args.sampler_class],
@@ -125,7 +135,7 @@ if __name__ == "__main__":
     if args.cuda:
         model = model.cuda()
     
-    print(model, file=sys.stderr)
+    # print(model, file=sys.stderr)
     
     # --
     # Train
@@ -134,7 +144,9 @@ if __name__ == "__main__":
     
     start_time = time()
     val_metric = None
+    best_test = 0.0
     for epoch in range(args.epochs):
+
         
         # Train
         _ = model.train()
@@ -146,32 +158,43 @@ if __name__ == "__main__":
                 targets=targets,
                 loss_fn=problem.loss_fn,
             )
+
+            # print("targets shape", targets.shape)
+            # print("preds shape", preds.shape)
             
-            train_metric = problem.metric_fn(to_numpy(targets), to_numpy(preds))
-            print(json.dumps({
-                "epoch" : epoch,
-                "epoch_progress" : epoch_progress,
-                "train_metric" : train_metric,
-                "val_metric" : val_metric,
-                "time" : time() - start_time,
-            }, double_precision=5))
-            sys.stdout.flush()
+            # train_metric = problem.metric_fn(to_numpy(targets), to_numpy(preds))
+            train_metric = problem.metric_fn(targets, preds)
+            # print(json.dumps({
+            #     "epoch" : epoch,
+            #     "epoch_progress" : epoch_progress,
+            #     "train_metric" : train_metric,
+            #     "val_metric" : val_metric,
+            #     "time" : time() - start_time,
+            # }, double_precision=5))
+            # sys.stdout.flush()
         
         # Evaluate
         _ = model.eval()
         val_metric = evaluate(model, problem, mode='val')
     
-    print('-- done --', file=sys.stderr)
-    print(json.dumps({
-        "epoch" : epoch,
-        "train_metric" : train_metric,
-        "val_metric" : val_metric,
-        "time" : time() - start_time,
-    }, double_precision=5))
-    sys.stdout.flush()
+        test_score = evaluate(model, problem, mode='test')
+        if args.show_test:
+            print(json.dumps({
+                "test_f1" : test_score
+            }, double_precision=5))
+
+        if best_test < test_score['micro']:
+            best_test = test_score['micro']
+
+    # print('-- done --', file=sys.stderr)
+    # print(json.dumps({
+    #     "epoch" : epoch,
+    #     "train_metric" : train_metric,
+    #     "val_metric" : val_metric,
+    #     "time" : time() - start_time,
+    # }, double_precision=5))
+    # sys.stdout.flush()
     
-    if args.show_test:
-        print(json.dumps({
-            "test_f1" : evaluate(model, problem, mode='test')
-        }, double_precision=5))
+    
+    return test_score['micro']
 

@@ -44,18 +44,48 @@ class ProblemLosses:
 class ProblemMetrics:
     @staticmethod
     def multilabel_classification(y_true, y_pred):
-        y_pred = (y_pred > 0).astype(int)
+        if not isinstance(y_pred, np.ndarray):
+            temp_pred = y_pred.cpu().detach().numpy()
+        else:
+            temp_pred = y_pred
+
+        if not isinstance(y_true, np.ndarray):
+            temp_true = y_true.cpu().detach().numpy()
+        else:
+            temp_true = y_true
+
+        # temp_pred = np.argmax(temp_pred, axis=1)
+        temp_pred = (temp_pred > 0.5).astype(int)
+
+
+        # print("temp_true\n", temp_true)
+        # print("temp_pred\n", temp_pred)
         return {
-            "micro" : float(metrics.f1_score(y_true, y_pred, average="micro")),
-            "macro" : float(metrics.f1_score(y_true, y_pred, average="macro")),
+            "micro" : float(metrics.f1_score(temp_true, temp_pred, average="micro")),
+            "macro" : float(metrics.f1_score(temp_true, temp_pred, average="macro")),
         }
     
     @staticmethod
     def classification(y_true, y_pred):
-        y_pred = np.argmax(y_pred, axis=1)
+        if not isinstance(y_pred, np.ndarray):
+            temp_pred = y_pred.cpu().detach().numpy()
+        else:
+            temp_pred = y_pred
+
+        if not isinstance(y_true, np.ndarray):
+            temp_true = y_true.cpu().detach().numpy()
+        else:
+            temp_true = y_true
+
+        temp_pred = np.argmax(temp_pred, axis=1)
+
+        # print("temp_pred\n", temp_pred)
+        # print("temp_true\n", temp_true)
+        
+        
         return {
-            "micro" : float(metrics.f1_score(y_true, y_pred, average="micro")),
-            "macro" : float(metrics.f1_score(y_true, y_pred, average="macro")),
+            "micro" : float(metrics.f1_score(temp_true, temp_pred, average="micro")),
+            "macro" : float(metrics.f1_score(temp_true, temp_pred, average="macro")),
         }
         # return (y_pred == y_true.squeeze()).mean()
     
@@ -74,7 +104,7 @@ def parse_csr_matrix(x):
 class NodeProblem(object):
     def __init__(self, problem_path, cuda=True):
         
-        print('NodeProblem: loading started')
+        # print('NodeProblem: loading started')
         
         f = h5py.File(problem_path)
         self.task      = f['task'].value
@@ -102,10 +132,15 @@ class NodeProblem(object):
             "test"  : np.where(self.folds == 'test')[0],
         }
         
+
+        # print("train len \t", self.nodes["train"].shape)
+        # print("val len \t", self.nodes["val"].shape)
+        # print("test len \t", self.nodes["test"].shape)
+
         self.loss_fn = getattr(ProblemLosses, self.task)
         self.metric_fn = getattr(ProblemMetrics, self.task)
         
-        print('NodeProblem: loading finished')
+        # print('NodeProblem: loading finished')
     
     def __to_torch(self):
         if not sparse.issparse(self.adj):

@@ -1,0 +1,5 @@
+{
+    "samples_1":{"_type":"quniform","_value":[20, 50, 1]},
+    "samples_2":{"_type":"quniform","_value":[5, 30, 1]},
+    "samples_3":{"_type":"quniform","_value":[0, 20, 1]}
+}

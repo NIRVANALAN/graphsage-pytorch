@@ -1,0 +1,160 @@
+/data/data0/xuehui/workspace/pytorch-graphsage/problem.py:109: H5pyDeprecationWarning: The default file mode will change to 'r' (read-only) in h5py 3.0. To suppress this warning, pass the mode you need to h5py.File(), or set the global default h5.get_config().default_file_mode, or set the environment variable H5PY_DEFAULT_READONLY=1. Available modes are: 'r', 'r+', 'w', 'w-'/'x', 'a'. See the docs for details.
+  f = h5py.File(problem_path)
+/data/data0/xuehui/workspace/pytorch-graphsage/problem.py:110: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  self.task      = f['task'].value
+/data/data0/xuehui/workspace/pytorch-graphsage/problem.py:111: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  self.n_classes = f['n_classes'].value if 'n_classes' in f else 1 # !!
+/data/data0/xuehui/workspace/pytorch-graphsage/problem.py:112: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  self.feats     = f['feats'].value if 'feats' in f else None
+/data/data0/xuehui/workspace/pytorch-graphsage/problem.py:113: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  self.folds     = f['folds'].value
+/data/data0/xuehui/workspace/pytorch-graphsage/problem.py:114: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  self.targets   = f['targets'].value
+/data/data0/xuehui/workspace/pytorch-graphsage/problem.py:119: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  self.adj = f['adj'].value
+/data/data0/xuehui/workspace/pytorch-graphsage/problem.py:120: H5pyDeprecationWarning: dataset.value has been deprecated. Use dataset[()] instead.
+  self.train_adj = f['train_adj'].value
+Search space	 {u'samples_1': {u'_value': [20, 50, 1], u'_type': u'quniform'}, u'samples_3': {u'_value': [0, 20, 1], u'_type': u'quniform'}, u'samples_2': {u'_value': [5, 30, 1], u'_type': u'quniform'}}
+Params	 {u'samples_1': 38.0, u'samples_3': 2.0, u'samples_2': 18.0}
+/data/data0/xuehui/workspace/pytorch-graphsage/models.py:102: UserWarning: torch.nn.utils.clip_grad_norm is now deprecated in favor of torch.nn.utils.clip_grad_norm_.
+  torch.nn.utils.clip_grad_norm(self.parameters(), 5)
+/home/xuehui/miniconda3/envs/py27/lib/python2.7/site-packages/sklearn/metrics/classification.py:1143: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 in labels with no predicted samples.
+  'precision', 'predicted', average, warn_for)
+/home/xuehui/miniconda3/envs/py27/lib/python2.7/site-packages/sklearn/metrics/classification.py:1145: UndefinedMetricWarning: F-score is ill-defined and being set to 0.0 in labels with no true samples.
+  'recall', 'true', average, warn_for)
+Receive value	 0.951115046807
+Params	 {u'samples_1': 24.0, u'samples_3': 12.0, u'samples_2': 13.0}
+Receive value	 0.952217443163
+Params	 {u'samples_1': 20.0, u'samples_3': 15.0, u'samples_2': 10.0}
+Receive value	 0.952470452163
+Params	 {u'samples_1': 47.0, u'samples_3': 20.0, u'samples_2': 10.0}
+Receive value	 0.952849965663
+Params	 {u'samples_1': 41.0, u'samples_3': 4.0, u'samples_2': 11.0}
+Receive value	 0.950627100878
+Params	 {u'samples_1': 40.0, u'samples_3': 17.0, u'samples_2': 30.0}
+Receive value	 0.951982506235
+Params	 {u'samples_1': 32.0, u'samples_3': 18.0, u'samples_2': 22.0}
+Receive value	 0.952199371092
+Params	 {u'samples_1': 28.0, u'samples_3': 15.0, u'samples_2': 15.0}
+Receive value	 0.95294032602
+Params	 {u'samples_1': 25.0, u'samples_3': 4.0, u'samples_2': 8.0}
+Receive value	 0.952615028735
+Params	 {u'samples_1': 34.0, u'samples_3': 3.0, u'samples_2': 8.0}
+Receive value	 0.951241551307
+Params	 {u'samples_1': 32.0, u'samples_3': 19.0, u'samples_2': 16.0}
+Receive value	 0.951494560307
+Params	 {u'samples_1': 49.0, u'samples_3': 6.0, u'samples_2': 17.0}
+Receive value	 0.953012614306
+Params	 {u'samples_1': 42.0, u'samples_3': 18.0, u'samples_2': 15.0}
+Receive value	 0.951096974735
+Params	 {u'samples_1': 43.0, u'samples_3': 17.0, u'samples_2': 22.0}
+Receive value	 0.951422272021
+Params	 {u'samples_1': 45.0, u'samples_3': 17.0, u'samples_2': 7.0}
+Receive value	 0.951295767521
+Params	 {u'samples_1': 21.0, u'samples_3': 16.0, u'samples_2': 15.0}
+Receive value	 0.951783713449
+Params	 {u'samples_1': 41.0, u'samples_3': 9.0, u'samples_2': 18.0}
+Receive value	 0.951548776521
+Params	 {u'samples_1': 23.0, u'samples_3': 13.0, u'samples_2': 14.0}
+Receive value	 0.953102974663
+Params	 {u'samples_1': 25.0, u'samples_3': 17.0, u'samples_2': 26.0}
+Receive value	 0.952578884592
+Params	 {u'samples_1': 34.0, u'samples_3': 1.0, u'samples_2': 29.0}
+Receive value	 0.951621064806
+Params	 {u'samples_1': 50.0, u'samples_3': 7.0, u'samples_2': 21.0}
+Receive value	 0.950337947736
+Params	 {u'samples_1': 50.0, u'samples_3': 12.0, u'samples_2': 19.0}
+Receive value	 0.951386127878
+Params	 {u'samples_1': 28.0, u'samples_3': 9.0, u'samples_2': 13.0}
+Receive value	 0.952831893592
+Params	 {u'samples_1': 37.0, u'samples_3': 6.0, u'samples_2': 24.0}
+Receive value	 0.951892145878
+Params	 {u'samples_1': 47.0, u'samples_3': 12.0, u'samples_2': 5.0}
+Receive value	 0.950428308093
+Params	 {u'samples_1': 30.0, u'samples_3': 7.0, u'samples_2': 20.0}
+Receive value	 0.951584920664
+Params	 {u'samples_1': 22.0, u'samples_3': 10.0, u'samples_2': 13.0}
+Receive value	 0.953536704377
+Params	 {u'samples_1': 22.0, u'samples_3': 13.0, u'samples_2': 13.0}
+Receive value	 0.953536704377
+Params	 {u'samples_1': 22.0, u'samples_3': 10.0, u'samples_2': 5.0}
+Receive value	 0.951783713449
+Params	 {u'samples_1': 28.0, u'samples_3': 14.0, u'samples_2': 12.0}
+Receive value	 0.953265623306
+Params	 {u'samples_1': 25.0, u'samples_3': 10.0, u'samples_2': 9.0}
+Receive value	 0.951928290021
+Params	 {u'samples_1': 20.0, u'samples_3': 11.0, u'samples_2': 12.0}
+Receive value	 0.953771641306
+Params	 {u'samples_1': 37.0, u'samples_3': 11.0, u'samples_2': 6.0}
+Receive value	 0.950681317093
+Params	 {u'samples_1': 20.0, u'samples_3': 8.0, u'samples_2': 11.0}
+Receive value	 0.95230780352
+Params	 {u'samples_1': 20.0, u'samples_3': 11.0, u'samples_2': 10.0}
+Receive value	 0.952470452163
+Params	 {u'samples_1': 27.0, u'samples_3': 14.0, u'samples_2': 17.0}
+Receive value	 0.951639136878
+Params	 {u'samples_1': 30.0, u'samples_3': 5.0, u'samples_2': 12.0}
+Receive value	 0.953247551234
+Params	 {u'samples_1': 26.0, u'samples_3': 15.0, u'samples_2': 9.0}
+Receive value	 0.953428271949
+Params	 {u'samples_1': 23.0, u'samples_3': 12.0, u'samples_2': 11.0}
+Receive value	 0.951223479235
+Params	 {u'samples_1': 31.0, u'samples_3': 2.0, u'samples_2': 7.0}
+Receive value	 0.951494560307
+Params	 {u'samples_1': 39.0, u'samples_3': 8.0, u'samples_2': 14.0}
+Receive value	 0.952199371092
+Params	 {u'samples_1': 35.0, u'samples_3': 20.0, u'samples_2': 19.0}
+Receive value	 0.950609028807
+Params	 {u'samples_1': 24.0, u'samples_3': 4.0, u'samples_2': 16.0}
+Receive value	 0.952994542234
+Params	 {u'samples_1': 21.0, u'samples_3': 14.0, u'samples_2': 24.0}
+Receive value	 0.953048758449
+Params	 {u'samples_1': 27.0, u'samples_3': 19.0, u'samples_2': 9.0}
+Receive value	 0.952542740449
+Params	 {u'samples_1': 29.0, u'samples_3': 13.0, u'samples_2': 14.0}
+Receive value	 0.952886109806
+Params	 {u'samples_1': 32.0, u'samples_3': 16.0, u'samples_2': 16.0}
+Receive value	 0.951494560307
+Params	 {u'samples_1': 34.0, u'samples_3': 9.0, u'samples_2': 7.0}
+Receive value	 0.952325875592
+Params	 {u'samples_1': 24.0, u'samples_3': 11.0, u'samples_2': 18.0}
+Receive value	 0.953337911591
+Params	 {u'samples_1': 21.0, u'samples_3': 13.0, u'samples_2': 12.0}
+Receive value	 0.953229479163
+Params	 {u'samples_1': 44.0, u'samples_3': 15.0, u'samples_2': 10.0}
+Receive value	 0.951693353092
+Params	 {u'samples_1': 26.0, u'samples_3': 0.0, u'samples_2': 23.0}
+Receive value	 0.954060794448
+Params	 {u'samples_1': 27.0, u'samples_3': 1.0, u'samples_2': 29.0}
+Receive value	 0.952633100806
+Params	 {u'samples_1': 35.0, u'samples_3': 3.0, u'samples_2': 27.0}
+Receive value	 0.951386127878
+Params	 {u'samples_1': 26.0, u'samples_3': 5.0, u'samples_2': 25.0}
+Receive value	 0.951765641378
+Params	 {u'samples_1': 33.0, u'samples_3': 0.0, u'samples_2': 21.0}
+Receive value	 0.951892145878
+Params	 {u'samples_1': 23.0, u'samples_3': 8.0, u'samples_2': 23.0}
+Receive value	 0.952596956663
+Params	 {u'samples_1': 29.0, u'samples_3': 6.0, u'samples_2': 27.0}
+Receive value	 0.951892145878
+Params	 {u'samples_1': 31.0, u'samples_3': 0.0, u'samples_2': 23.0}
+Receive value	 0.951548776521
+Params	 {u'samples_1': 37.0, u'samples_3': 3.0, u'samples_2': 30.0}
+Receive value	 0.952199371092
+Params	 {u'samples_1': 46.0, u'samples_3': 7.0, u'samples_2': 20.0}
+Receive value	 0.95243430802
+Params	 {u'samples_1': 26.0, u'samples_3': 18.0, u'samples_2': 27.0}
+Receive value	 0.952596956663
+Params	 {u'samples_1': 20.0, u'samples_3': 2.0, u'samples_2': 22.0}
+Receive value	 0.953012614306
+Params	 {u'samples_1': 24.0, u'samples_3': 1.0, u'samples_2': 17.0}
+Receive value	 0.953084902592
+Params	 {u'samples_1': 41.0, u'samples_3': 11.0, u'samples_2': 19.0}
+Receive value	 0.953627064734
+Params	 {u'samples_1': 41.0, u'samples_3': 9.0, u'samples_2': 19.0}
+Receive value	 0.953627064734
+Params	 {u'samples_1': 48.0, u'samples_3': 9.0, u'samples_2': 21.0}
+Receive value	 0.95026565945
+Params	 {u'samples_1': 43.0, u'samples_3': 16.0, u'samples_2': 25.0}
+Receive value	 0.951096974735
+Params	 {u'samples_1': 39.0, u'samples_3': 5.0, u'samples_2': 20.0}
