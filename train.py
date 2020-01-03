@@ -117,8 +117,18 @@ if __name__ == "__main__":
                 "n_train_samples" : n_train_samples[0],
                 "n_val_samples" : n_val_samples[0],
                 "output_dim" : output_dims[0],
+                "train_samples": n_train_samples,
+                "val_samples" : n_val_samples,
                 "activation" : F.relu,
             },
+            # {
+            #     "n_train_samples" : n_train_samples[0],
+            #     "n_val_samples" : n_val_samples[0],
+            #     "output_dim" : output_dims[0],
+            #     "train_samples": n_train_samples,
+            #     "val_samples" : n_val_samples,
+            #     "activation" : F.relu,
+            # },
             {
                 "n_train_samples" : n_train_samples[1],
                 "n_val_samples" : n_val_samples[1],
@@ -186,15 +196,15 @@ if __name__ == "__main__":
         if best_test < test_score['micro']:
             best_test = test_score['micro']
 
-    # print('-- done --', file=sys.stderr)
-    # print(json.dumps({
-    #     "epoch" : epoch,
-    #     "train_metric" : train_metric,
-    #     "val_metric" : val_metric,
-    #     "time" : time() - start_time,
-    # }, double_precision=5))
-    # sys.stdout.flush()
+    print('-- done --', file=sys.stderr)
+    print(json.dumps({
+        "epoch" : epoch,
+        "train_metric" : train_metric,
+        "val_metric" : val_metric,
+        "time" : time() - start_time,
+    }, double_precision=5))
+    sys.stdout.flush()
     
     
-    return test_score['micro']
+    # return test_score['micro']
 

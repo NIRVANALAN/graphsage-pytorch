@@ -174,9 +174,12 @@ class NodeProblem(object):
         return mids, targets
     
     def iterate(self, mode, batch_size=512, shuffle=False):
+        '''
+        split the nodes based on batch_size
+        '''
         nodes = self.nodes[mode]
         
-        idx = np.arange(nodes.shape[0])
+        idx = np.arange(nodes.shape[0]) # 0-1207 for cora
         if shuffle:
             idx = np.random.permutation(idx)
         

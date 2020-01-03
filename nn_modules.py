@@ -45,7 +45,7 @@ class UniformNeighborSampler(object):
         if ids.is_cuda:
             perm = perm.cuda()
         
-        tmp = tmp[:,perm]
+        tmp = tmp[:,perm]  # permute the neighbours in adj
         return tmp[:,:n_samples]
 
 
@@ -294,7 +294,10 @@ class AttentionAggregator(nn.Module, AggregatorMixin):
             nn.Linear(input_dim, hidden_dim, bias=False),
             nn.Tanh(),
             nn.Linear(hidden_dim, hidden_dim, bias=False),
-        ])
+        ]) # TODO replace with 1DConv
+        # self.conv_att = nn.Sequential(*[
+        #     nn.Conv1d(input_dim, output_dim)
+        # ])
         self.fc_x = nn.Linear(input_dim, output_dim, bias=False)
         self.fc_neib = nn.Linear(input_dim, output_dim, bias=False)
         
@@ -304,17 +307,19 @@ class AttentionAggregator(nn.Module, AggregatorMixin):
     
     def forward(self, x, neibs):
         # Compute attention weights
+        # import pdb; pdb.set_trace()
         neib_att = self.att(neibs)
         x_att    = self.att(x)
         neib_att = neib_att.view(x.size(0), -1, neib_att.size(1))
         x_att    = x_att.view(x_att.size(0), x_att.size(1), 1)
-        ws       = F.softmax(torch.bmm(neib_att, x_att).squeeze())
+        ws       = F.softmax(torch.bmm(neib_att, x_att).squeeze()) # weighted sampling
+        # import pdb; pdb.set_trace()
         
         # Weighted average of neighbors
         agg_neib = neibs.view(x.size(0), -1, neibs.size(1))
         agg_neib = torch.sum(agg_neib * ws.unsqueeze(-1), dim=1)
         
-        out = self.combine_fn([self.fc_x(x), self.fc_neib(agg_neib)])
+        out = self.combine_fn([self.fc_x(x), self.fc_neib(agg_neib)])  # residual connection?
         if self.activation:
             out = self.activation(out)
         
